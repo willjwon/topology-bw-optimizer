@@ -1,0 +1,35 @@
+import torch
+from src.model.model import Model
+from src.helper.typing import *
+
+
+class NoOverlapModel(Model):
+    def training_time(self) -> torch.tensor:
+        self._sync_bandwidth()
+
+        # calculate time
+        training_time = torch.tensor(0, dtype=torch.float64)
+
+        # forward pass
+        for layer in self.workload.layers:
+            # training_time += layer.forward.compute_time
+            training_time += self._collective(collective_type=layer.forward.comm_type,
+                                              processing_dims=self.mp_dim,
+                                              collective_size=layer.forward.comm_size)
+
+        # backprop
+        for i in range(len(self.workload.layers) - 1, -1, -1):
+            layer = self.workload.layers[i]
+
+            # input grad
+            # training_time += layer.input_grad.compute_time
+            training_time += self._collective(collective_type=layer.input_grad.comm_type,
+                                              processing_dims=self.mp_dim,
+                                              collective_size=layer.input_grad.comm_size)
+            # weight grad
+            # training_time += layer.weight_grad.compute_time
+            training_time += self._collective(collective_type=layer.weight_grad.comm_type,
+                                              processing_dims=self.dp_dim,
+                                              collective_size=layer.weight_grad.comm_size)
+        # exit(-1)
+        return training_time

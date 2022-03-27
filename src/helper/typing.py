@@ -1,5 +1,5 @@
 from enum import Enum, auto
-from typing import List, Dict, Optional
+from typing import List, Optional, Tuple
 
 
 class Topology(Enum):

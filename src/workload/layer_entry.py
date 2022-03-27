@@ -6,9 +6,9 @@ class LayerEntry:
                  compute_time: float,
                  comm_type: Collective,
                  comm_size: float):
-        self.compute_type = compute_time
+        self.compute_time = compute_time
         self.comm_type = comm_type
         self.comm_size = comm_size
 
     def print(self) -> None:
-        print(f"{self.compute_type}\t{self.comm_type}\t{self.comm_size}")
+        print(f"{self.compute_time}\t{self.comm_type}\t{self.comm_size}")
