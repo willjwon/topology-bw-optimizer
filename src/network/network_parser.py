@@ -18,8 +18,10 @@ class NetworkParser:
         npus_count = network_file['npus-count']
         network_type = self._parse_network_type(network_type=network_file['network-type'])
         topology = self._parse_topology(topology=network_file['topology'])
+        dims_count = len(npus_count)
 
-        return Network(total_bandwidth=total_bandwidth,
+        return Network(dims_count=dims_count,
+                       total_bandwidth=total_bandwidth,
                        npus_count=npus_count,
                        network_type=network_type,
                        topology=topology)

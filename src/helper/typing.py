@@ -1,5 +1,5 @@
 from enum import Enum, auto
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 
 class Topology(Enum):
@@ -13,3 +13,11 @@ class NetworkType(Enum):
     Package = auto()
     Node = auto()
     Pod = auto()
+
+
+class Collective(Enum):
+    NoComm = auto()
+    ReduceScatter = auto()
+    AllGather = auto()
+    AllReduce = auto()
+    AllToAll = auto()
