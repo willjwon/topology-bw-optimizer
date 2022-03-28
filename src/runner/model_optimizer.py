@@ -6,9 +6,13 @@ from src.model.model import Model
 class ModelOptimizer:
     def __init__(self,
                  models: List[Model],
+                 weights: Optional[List[float]],
                  lr: float,
                  l2_break: float = 1e-7):
         self.models = models
+        self.weights = self._normalize_weights(models_count=len(models),
+                                               weights=weights)
+
         self.optimizer = torch.optim.Adam([self.models[0].torch_bandwidths],
                                           lr=lr)
         self.l2_break = l2_break
@@ -35,14 +39,25 @@ class ModelOptimizer:
                         print(f"Optimization finished at step {step}")
                         break
 
+    @staticmethod
+    def _normalize_weights(models_count: int,
+                           weights: Optional[List[int]]) -> List[float]:
+        if weights is None:
+            weights = [1] * models_count
+
+        norm_weights = [x / sum(weights) for x in weights]
+        return norm_weights
+
     def _run_step(self) -> torch.tensor:
         self.optimizer.zero_grad()
 
         self.models[0].sync_bandwidth()
 
         training_time = torch.tensor(0, dtype=torch.float64, requires_grad=False)
-        for model in self.models:
-            training_time += model.training_time()
+        for i in range(len(self.weights)):
+            weight = self.weights[i]
+            time = self.models[i].training_time()
+            training_time += weight * time
 
         training_time.backward()
         self.optimizer.step()

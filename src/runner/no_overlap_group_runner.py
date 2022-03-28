@@ -31,6 +31,7 @@ def main():
 
     # Create and run optimizer
     optimizer = ModelOptimizer(models=models,
+                               weights=None,
                                lr=5e-3,
                                l2_break=1e-6)
     optimizer.optimize(steps_count=500000,
