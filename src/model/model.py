@@ -53,9 +53,30 @@ class Model:
         if processing_dims is None:
             return 0.0
 
-        if collective_type == Collective.AllReduce \
-                or collective_type == Collective.ReduceScatter \
-                or collective_type == Collective.AllGather:
+        if collective_type == Collective.ReduceScatter:
+            messages = list()  # todo: implement message size logic
+            assert False, "Not implemented yet"
+            exit(-1)
+
+        if collective_type == Collective.AllGather:
+            dims_count = len(processing_dims)
+
+            message_size = [collective_size]
+            for i in range(dims_count - 1, 0, -1):
+                dim = processing_dims[i]
+                npus_count = self.network.npus_count[dim]
+                new_message_size = message_size[0] * npus_count
+                message_size = [new_message_size] + message_size
+
+            messages = list()
+            for i in range(dims_count):
+                dim = processing_dims[i]
+                npus_count = self.network.npus_count[dim]
+
+                new_message_size = message_size[i] * (npus_count - 1)
+                messages.append(new_message_size)
+
+        if collective_type == Collective.AllReduce:
             dims_count = len(processing_dims)
 
             # calculate message size, per NPU
@@ -72,9 +93,7 @@ class Model:
                 dim = processing_dims[i]
                 npus_count = self.network.npus_count[dim]
 
-                new_message_size = (message_size[i] / npus_count) * (npus_count - 1)
-                if collective_type == Collective.AllReduce:
-                    new_message_size *= 2
+                new_message_size = (message_size[i] / npus_count) * (npus_count - 1) * 2
                 messages.append(new_message_size)
 
         if collective_type == Collective.AllToAll:

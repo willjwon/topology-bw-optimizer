@@ -15,6 +15,9 @@ class NoOverlapModel(Model):
             training_time += self._collective(collective_type=layer.forward.comm_type,
                                               processing_dims=self.mp_dim,
                                               collective_size=layer.forward.comm_size)
+            training_time += self._collective(collective_type=layer.forward.comm_type,
+                                              processing_dims=self.mp_dim,
+                                              collective_size=layer.forward.comm_size)
 
         # backprop
         for i in range(len(self.workload.layers) - 1, -1, -1):
@@ -30,4 +33,5 @@ class NoOverlapModel(Model):
             training_time += self._collective(collective_type=layer.weight_grad.comm_type,
                                               processing_dims=self.dp_dim,
                                               collective_size=layer.weight_grad.comm_size)
+
         return training_time
