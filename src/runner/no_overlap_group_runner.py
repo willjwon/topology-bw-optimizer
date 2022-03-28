@@ -6,8 +6,11 @@ from src.model.model import Model
 
 def main():
     # metadata
-    workload_path = '../../input/workload/t1t.txt'
     network_path = '../../input/network/4d.json'
+
+    t17b_path = '../../input/workload/t17b.txt'
+    t1t_path = '../../input/workload/t1t.txt'
+    gpt3_path = '../../input/workload/gpt3.txt'
 
     # parse network
     network_parser = NetworkParser(path=network_path)
@@ -15,12 +18,19 @@ def main():
 
     # create and set model
     Model.init(network=network)
-    model = NoOverlapModel(workload_path=workload_path,
-                           mp_size=128,
-                           dp_size=8)
+    t17b_model = NoOverlapModel(workload_path=t17b_path,
+                                mp_size=1,
+                                dp_size=1024)
+    gpt3_model = NoOverlapModel(workload_path=gpt3_path,
+                                mp_size=16,
+                                dp_size=64)
+    t1t_model = NoOverlapModel(workload_path=t1t_path,
+                               mp_size=128,
+                               dp_size=8)
+    models = [t17b_model, gpt3_model, t1t_model]
 
     # Create and run optimizer
-    optimizer = ModelOptimizer(models=[model],
+    optimizer = ModelOptimizer(models=models,
                                lr=5e-3,
                                l2_break=1e-6)
     optimizer.optimize(steps_count=500000,
@@ -28,7 +38,7 @@ def main():
 
     # Print the result
     print("\nFound BW Assignment:\n\t", end="")
-    model.print_bandwidth()
+    models[0].print_bandwidth()
     print()
 
 
