@@ -15,6 +15,12 @@ class NetworkType(Enum):
     Pod = auto()
 
 
+class CostElement(Enum):
+    Link = auto()
+    Nic = auto()
+    Switch = auto()
+
+
 class Collective(Enum):
     NoComm = auto()
     ReduceScatter = auto()

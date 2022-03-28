@@ -31,17 +31,7 @@ class NetworkParser:
         result = list()
 
         for t in network_type:
-            if t == 'Tile':
-                result.append(NetworkType.Tile)
-            elif t == 'Package':
-                result.append(NetworkType.Package)
-            elif t == 'Node':
-                result.append(NetworkType.Node)
-            elif t == 'Pod':
-                result.append(NetworkType.Pod)
-            else:
-                assert False, "Network type not defined"
-                exit(-1)
+            result.append(NetworkType[t])
 
         return result
 
@@ -50,14 +40,6 @@ class NetworkParser:
         result = list()
 
         for t in topology:
-            if t == 'Ring':
-                result.append(Topology.Ring)
-            elif t == 'FullyConnected':
-                result.append(Topology.FullyConnected)
-            elif t == 'Switch':
-                result.append(Topology.Switch)
-            else:
-                assert False, "Topology not defined"
-                exit(-1)
+            result.append(Topology[t])
 
         return result
