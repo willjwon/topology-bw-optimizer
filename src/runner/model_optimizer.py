@@ -28,10 +28,10 @@ class ModelOptimizer:
                     self.model.print_bandwidth()
                     print("]\n")
 
-                    new = self.model.bandwidths.detach().numpy().tolist()
-                    if self._l2_diff(old=old, new=new) < 1e-8:
-                        print(f"Optimization finished at step {step}")
-                        break
+                    # new = self.model.bandwidths.detach().numpy().tolist()
+                    # if self._l2_diff(old=old, new=new) < 1e-8:
+                    #     print(f"Optimization finished at step {step}")
+                    #     break
 
     def _run_step(self) -> torch.tensor:
         self.optimizer.zero_grad()

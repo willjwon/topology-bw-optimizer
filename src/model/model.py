@@ -40,8 +40,7 @@ class Model:
             print(f"{bw:.2f}", end=" ")
 
     def _sync_bandwidth(self) -> None:
-        clipped_bw = torch.clip(self.torch_bandwidths, min=0)
-        last_bandwidth = self.network.total_bandwidth - torch.sum(clipped_bw)
+        last_bandwidth = self.network.total_bandwidth - torch.sum(self.torch_bandwidths)
         self.bandwidths = torch.cat((self.torch_bandwidths, last_bandwidth.view(1)))
 
     def _collective(self,
