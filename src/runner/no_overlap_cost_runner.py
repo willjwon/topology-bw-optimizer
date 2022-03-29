@@ -1,4 +1,4 @@
-from src.model.no_overlap_model_cost import NoOverlapModelCost
+from src.model.model_cost_no_overlap import ModelCostNoOverlap
 from src.runner.model_optimizer import ModelOptimizer
 from src.network.network_parser import NetworkParser
 from src.model.model import Model
@@ -21,7 +21,7 @@ def main():
 
     # create and set model
     Model.init(network=network, cost_calculator=cost_calculator)
-    model = NoOverlapModelCost(workload_path=workload_path,
+    model = ModelCostNoOverlap(workload_path=workload_path,
                                mp_size=1,
                                dp_size=1024)
 

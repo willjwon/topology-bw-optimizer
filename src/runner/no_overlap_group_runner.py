@@ -1,4 +1,4 @@
-from src.model.no_overlap_model import NoOverlapModel
+from src.model.model_no_overlap import ModelNoOverlap
 from src.runner.model_optimizer import ModelOptimizer
 from src.network.network_parser import NetworkParser
 from src.model.model import Model
@@ -18,13 +18,13 @@ def main():
 
     # create and set model
     Model.init(network=network)
-    t17b_model = NoOverlapModel(workload_path=t17b_path,
+    t17b_model = ModelNoOverlap(workload_path=t17b_path,
                                 mp_size=1,
                                 dp_size=1024)
-    gpt3_model = NoOverlapModel(workload_path=gpt3_path,
+    gpt3_model = ModelNoOverlap(workload_path=gpt3_path,
                                 mp_size=16,
                                 dp_size=64)
-    t1t_model = NoOverlapModel(workload_path=t1t_path,
+    t1t_model = ModelNoOverlap(workload_path=t1t_path,
                                mp_size=128,
                                dp_size=8)
     models = [t17b_model, gpt3_model, t1t_model]

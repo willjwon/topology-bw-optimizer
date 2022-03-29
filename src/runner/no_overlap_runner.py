@@ -1,4 +1,4 @@
-from src.model.no_overlap_model import NoOverlapModel
+from src.model.model_no_overlap import ModelNoOverlap
 from src.runner.model_optimizer import ModelOptimizer
 from src.network.network_parser import NetworkParser
 from src.model.model import Model
@@ -15,7 +15,7 @@ def main():
 
     # create and set model
     Model.init(network=network)
-    model = NoOverlapModel(workload_path=workload_path,
+    model = ModelNoOverlap(workload_path=workload_path,
                            mp_size=128,
                            dp_size=8)
 

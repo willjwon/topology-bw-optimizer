@@ -1,9 +1,9 @@
 import torch
-from src.model.no_overlap_model import NoOverlapModel
+from src.model.model_no_overlap import ModelNoOverlap
 from src.model.model import Model
 
 
-class NoOverlapModelCost(NoOverlapModel):
+class ModelCostNoOverlap(ModelNoOverlap):
     cost_calculator = None
 
     def __init__(self,
