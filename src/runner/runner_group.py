@@ -1,10 +1,10 @@
 import sys
 from src.cost.cost_calculator import CostCalculator
 from src.model.model import Model
-from src.model.model_no_overlap import ModelNoOverlap
-from src.model.model_overlap import ModelOverlap
-from src.model.model_cost_no_overlap import ModelCostNoOverlap
-from src.model.model_cost_overlap import ModelCostOverlap
+from src.model.model_no_overlap_fwd_in_bckwd import ModelNoOverlapFwdInBckwd
+from src.model.model_overlap_fwd_in_bckwd import ModelOverlapFwdInBckwd
+from src.model.model_cost_no_overlap_fwd_in_bckwd import ModelCostNoOverlapFwdInBwd
+from src.model.model_cost_overlap_fwd_in_bckwd import ModelCostOverlapFwdInBckwd
 from src.network.network_parser import NetworkParser
 from src.runner.model_optimizer import ModelOptimizer
 
@@ -37,20 +37,20 @@ def main():
     for i in range(3):
         if training_loop == 'NoOverlap':
             if bw_target == 'Perf':
-                models.append(ModelNoOverlap(workload_path=workload_paths[i],
+                models.append(ModelNoOverlapFwdInBckwd(workload_path=workload_paths[i],
                                         mp_size=mp_size[i],
                                         dp_size=dp_size[i]))
             else:
-                models.append(ModelCostNoOverlap(workload_path=workload_paths[i],
+                models.append(ModelCostNoOverlapFwdInBwd(workload_path=workload_paths[i],
                                         mp_size=mp_size[i],
                                         dp_size=dp_size[i]))
         else:
             if bw_target == 'Perf':
-                models.append(ModelOverlap(workload_path=workload_paths[i],
+                models.append(ModelOverlapFwdInBckwd(workload_path=workload_paths[i],
                                         mp_size=mp_size[i],
                                         dp_size=dp_size[i]))
             else:
-                models.append(ModelCostOverlap(workload_path=workload_paths[i],
+                models.append(ModelCostOverlapFwdInBckwd(workload_path=workload_paths[i],
                                         mp_size=mp_size[i],
                                         dp_size=dp_size[i]))
 
