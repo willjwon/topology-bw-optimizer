@@ -38,12 +38,4 @@ class ModelOverlap(Model):
             layer_time = max(ig_time, wg_time)
             training_time += layer_time
 
-            if layer.input_grad.comm_size > 10000 and layer.weight_grad.comm_size > 10000:
-
-                if ig_time >= wg_time:
-                    print("IG time dominates", end=" ")
-                else:
-                    print("WG Time dominates", end=" ")
-                print("Layer", i)
-
         return training_time

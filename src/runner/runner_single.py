@@ -1,10 +1,10 @@
 import sys
 from src.cost.cost_calculator import CostCalculator
 from src.model.model import Model
-from src.model.model_no_overlap_fwd_in_bckwd import ModelNoOverlapFwdInBckwd
-from src.model.model_overlap_fwd_in_bckwd import ModelOverlapFwdInBckwd
-from src.model.model_cost_no_overlap_fwd_in_bckwd import ModelCostNoOverlapFwdInBwd
-from src.model.model_cost_overlap_fwd_in_bckwd import ModelCostOverlapFwdInBckwd
+from src.model.model_no_overlap import ModelNoOverlap
+from src.model.model_overlap import ModelOverlap
+from src.model.model_cost_no_overlap import ModelCostNoOverlap
+from src.model.model_cost_overlap import ModelCostOverlap
 from src.network.network_parser import NetworkParser
 from src.runner.model_optimizer import ModelOptimizer
 
@@ -36,20 +36,20 @@ def main():
     model = None
     if training_loop == 'NoOverlap':
         if bw_target == 'Perf':
-            model = ModelNoOverlapFwdInBckwd(workload_path=workload_path,
+            model = ModelNoOverlap(workload_path=workload_path,
                                     mp_size=mp_size,
                                     dp_size=dp_size)
         else:
-            model = ModelCostNoOverlapFwdInBwd(workload_path=workload_path,
+            model = ModelCostNoOverlap(workload_path=workload_path,
                                     mp_size=mp_size,
                                     dp_size=dp_size)
     else:
         if bw_target == 'Perf':
-            model = ModelOverlapFwdInBckwd(workload_path=workload_path,
+            model = ModelOverlap(workload_path=workload_path,
                                     mp_size=mp_size,
                                     dp_size=dp_size)
         else:
-            model = ModelCostOverlapFwdInBckwd(workload_path=workload_path,
+            model = ModelCostOverlap(workload_path=workload_path,
                                     mp_size=mp_size,
                                     dp_size=dp_size)
 
