@@ -16,7 +16,7 @@ def main():
     bandwidth = float(sys.argv[3])
     bw_target = sys.argv[4]
     training_loop = sys.argv[5]
-    workload_paths = [sys.argv[6:9]]
+    workload_paths = sys.argv[6:9]
     mp_size = [1, 16, 128]
     dp_size = [1024, 64, 8]
 
