@@ -37,20 +37,20 @@ def main():
     for i in range(3):
         if training_loop == 'NoOverlap':
             if bw_target == 'Perf':
-                model.append(ModelNoOverlap(workload_path=workload_paths[i],
+                models.append(ModelNoOverlap(workload_path=workload_paths[i],
                                         mp_size=mp_size[i],
                                         dp_size=dp_size[i]))
             else:
-                model.append(ModelCostNoOverlap(workload_path=workload_paths[i],
+                models.append(ModelCostNoOverlap(workload_path=workload_paths[i],
                                         mp_size=mp_size[i],
                                         dp_size=dp_size[i]))
         else:
             if bw_target == 'Perf':
-                model.append(ModelOverlap(workload_path=workload_paths[i],
+                models.append(ModelOverlap(workload_path=workload_paths[i],
                                         mp_size=mp_size[i],
                                         dp_size=dp_size[i]))
             else:
-                model.append(ModelCostOverlap(workload_path=workload_paths[i],
+                models.append(ModelCostOverlap(workload_path=workload_paths[i],
                                         mp_size=mp_size[i],
                                         dp_size=dp_size[i]))
 
