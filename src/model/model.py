@@ -53,7 +53,9 @@ class Model:
 
     def print_bandwidth(self):
         for bw in Model.bandwidths:
-            print(f"{bw:.2f}", end=" ")
+            print(f"{bw:.2f}", end="\t")
+            # print(f"{bw:.2f}", end=", ")
+            # print(f"{bw}", end="\t")
         print()
 
     @staticmethod

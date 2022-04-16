@@ -6,18 +6,18 @@ class ModelNoOverlapFwdInBckwd(Model):
     def training_time(self) -> torch.tensor:
         # calculate time
         training_time = torch.tensor(0, dtype=torch.float64)
-
+        # print('hi')
+        # print(self.mp_dim)
+        # print(self.mp_npus_count)
+        # print(self.dp_dim)
+        # print(self.dp_npus_count)
         # forward pass
         for layer in self.workload.layers:
             training_time += layer.forward.compute_time
-            training_time += Model._collective(collective_type=layer.forward.comm_type,
-                                               processing_dims=self.mp_dim,
-                                               npus_count=self.mp_npus_count,
-                                               collective_size=layer.forward.comm_size)
-            training_time += Model._collective(collective_type=layer.forward.comm_type,
-                                               processing_dims=self.mp_dim,
-                                               npus_count=self.mp_npus_count,
-                                               collective_size=layer.forward.comm_size)
+            training_time += 2 * Model._collective(collective_type=layer.forward.comm_type,
+                                                   processing_dims=self.mp_dim,
+                                                   npus_count=self.mp_npus_count,
+                                                   collective_size=layer.forward.comm_size)
 
         # backprop
         for i in range(len(self.workload.layers) - 1, -1, -1):

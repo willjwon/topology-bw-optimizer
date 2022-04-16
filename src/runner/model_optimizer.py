@@ -8,7 +8,7 @@ class ModelOptimizer:
                  models: List[Model],
                  weights: Optional[List[float]],
                  lr: float,
-                 l2_break: float = 1e-7):
+                 l2_break: Optional[float] = None):
         self.models = models
         self.weights = self._normalize_weights(models_count=len(models),
                                                weights=weights)
@@ -35,7 +35,8 @@ class ModelOptimizer:
                     print()
 
                     new = self.models[0].bandwidths.detach().numpy().tolist()
-                    if self._l2_diff(old=old, new=new) < self.l2_break:
+                    if self.l2_break is not None \
+                            and self._l2_diff(old=old, new=new) < self.l2_break:
                         print(f"Optimization finished at step {step}")
                         break
 
